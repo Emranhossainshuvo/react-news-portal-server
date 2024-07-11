@@ -1,12 +1,14 @@
 const express = require('express');
+const cors = require('cors');
 const app = express();
 const port = process.env.PORT || 5000;
 
 app.use(express.json());
+app.use(cors());
 
 
 const { MongoClient, ServerApiVersion } = require('mongodb');
-const uri = "mongodb+srv://news-portal:6Y9DpPHU3ETwm6Jg@cluster0.0fn8ke9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const uri = "mongodb+srv://react-news-app:TgMzrEeiXZufQKBj@cluster0.0fn8ke9.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 const client = new MongoClient(uri, {
     serverApi: {
         version: ServerApiVersion.v1,
@@ -27,8 +29,16 @@ run().catch(console.dir);
 
 
 
+const newsCollection = client.db('news-data').collection('news-data');
+
+
 app.get("/", (req, res) => {
     res.send("hello world")
+})
+
+app.get("/news", async(req, res) => {
+    const result = await newsCollection.find().toArray();
+    res.send(result);
 })
 
 
