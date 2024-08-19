@@ -29,7 +29,7 @@ run().catch(console.dir);
 
 
 
-const newsCollection = client.db('news').collection('news-data');
+const newsCollection = client.db('news-data').collection('news-data');
 
 
 app.get("/", (req, res) => {
